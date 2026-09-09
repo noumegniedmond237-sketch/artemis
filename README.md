@@ -7,12 +7,12 @@
 </p>
 
 <p align="center">
-  <a href="./README.md"><b>Français</b></a> •
-  <a href="https://github.com/google/artemis#readme">English (Google)</a> •
-  <a href="./README_CN.md">中文文档</a> •
   <a href="#antigravity--artemis--flux-de-test-autonome">Démonstration</a> •
   <a href="#démarrage-rapide">Démarrage Rapide</a> •
+  <a href="#modes-dutilisation">Modes d'Utilisation</a> •
   <a href="#intégration-mcp-pour-ides">Intégration MCP</a> •
+  <a href="#sdk-python">SDK Python</a> •
+  <a href="#architecture-technique-dartemis">Architecture</a> •
   <a href="#benchmarks--androidworld-sota-99">Benchmarks</a> •
   <a href="https://discord.gg/wF2FN4WHGY">Communauté Discord</a>
 </p>
