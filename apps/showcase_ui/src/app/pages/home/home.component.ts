@@ -238,8 +238,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     return [
       {
         kind: 'verify',
-        name: 'Result check',
-        ends: ['Off', 'Strict'],
+        name: 'Vérification du résultat',
+        ends: ['Désactivé', 'Strict'],
         ladder: VERIFICATION_LEVELS,
         index: vi,
         level: VERIFICATION_LEVELS[vi],
@@ -247,8 +247,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
       {
         kind: 'explore',
-        name: 'Screen reading',
-        ends: ['Faster', 'Sharper'],
+        name: 'Lecture de l\'écran',
+        ends: ['Plus rapide', 'Plus net'],
         ladder: EXPLORER_MODES,
         index: ei,
         level: EXPLORER_MODES[ei],
@@ -426,16 +426,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public emuHypervisorTitle = computed(() => {
     const os = this.effectiveOs();
-    if (os === 'windows') return 'Enable Windows Hypervisor Platform (WHPX)';
-    if (os === 'darwin') return 'Verify macOS Hypervisor / Install Tools';
-    return 'Enable KVM Hardware Acceleration (Linux)';
+    if (os === 'windows') return 'Activer Windows Hypervisor Platform (WHPX)';
+    if (os === 'darwin') return 'Vérifier l\'hyperviseur macOS / Installer les outils';
+    return 'Activer l\'accélération matérielle KVM (Linux)';
   });
 
   public emuHypervisorDesc = computed(() => {
     const os = this.effectiveOs();
-    if (os === 'windows') return 'Enable Windows Hypervisor Platform in PowerShell (Run as Administrator):';
-    if (os === 'darwin') return 'macOS uses native Hypervisor.framework. Install SDK tools via Homebrew (or Studio):';
-    return 'Ensure virtualization permissions are granted to your user account:';
+    if (os === 'windows') return 'Activer Windows Hypervisor Platform dans PowerShell (Exécuter en tant qu\'administrateur) :';
+    if (os === 'darwin') return 'macOS utilise nativement Hypervisor.framework. Installez les outils SDK via Homebrew (ou Studio) :';
+    return 'Assurez-vous que les permissions de virtualisation sont accordées à votre compte utilisateur :';
   });
 
   public emuHypervisorCmd = computed(() => {
@@ -780,11 +780,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getProviderHint(tab: string): string {
     switch (tab) {
       case 'gemini':
-        return 'For a quick start, Google Gemini provides a free API key. Artemis also supports other models (OpenAI, Claude, OpenRouter, etc.)—you can configure your own API keys directly in .env or your environment.';
+        return 'Pour démarrer rapidement, Google Gemini fournit une clé d\'API gratuite. Artemis prend également en charge d\'autres modèles (OpenAI, Claude, Ollama, etc.) configurables directement dans .env ou votre environnement.';
       case 'ocr':
-        return 'Google Cloud Vision API key for on-screen OCR text detection and UI grounding.';
+        return 'Clé d\'API Google Cloud Vision pour la détection OCR du texte à l\'écran et le repérage des composants.';
       default:
-        return 'Configure your API key or use environment definitions.';
+        return 'Configurez votre clé d\'API ou utilisez les variables d\'environnement.';
     }
   }
 
@@ -794,9 +794,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public getApiKeyPlaceholder(tab: string): string {
     switch (tab) {
-      case 'gemini': return 'Enter Gemini API Key (e.g. AIzaSy...)';
-      case 'ocr': return 'Enter Vision OCR API Key (e.g. AIzaSy...)';
-      default: return 'Enter API Key...';
+      case 'gemini': return 'Entrez la clé d\'API Gemini (ex. AIzaSy...)';
+      case 'ocr': return 'Entrez la clé d\'API Vision OCR (ex. AIzaSy...)';
+      default: return 'Entrez la clé d\'API...';
     }
   }
 
@@ -829,12 +829,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.systemService.restartAdb().subscribe({
       next: (res) => {
         this.adbRestartFeedback.set(
-          res?.restart_result?.skipped ? 'Devices Refreshed ✓' : 'ADB Refreshed ✓'
+          res?.restart_result?.skipped ? 'Appareils actualisés ✓' : 'ADB actualisé ✓'
         );
         setTimeout(() => this.adbRestartFeedback.set(null), 2500);
       },
       error: () => {
-        this.adbRestartFeedback.set('Restart Failed');
+        this.adbRestartFeedback.set('Échec de redémarrage');
         setTimeout(() => this.adbRestartFeedback.set(null), 3000);
       }
     });
@@ -842,7 +842,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public connectWifiDevice(): void {
     if (this.isRemoteAdbServer()) {
-      this.wifiConnectError.set('Switch to local ADB before connecting a Wireless ADB device.');
+      this.wifiConnectError.set('Basculez vers ADB local avant de connecter un appareil en Wi-Fi.');
       return;
     }
     const host = this.wifiHost().trim();
@@ -850,7 +850,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const port = parseInt(portStr, 10) || 5555;
 
     if (!host) {
-      this.wifiConnectError.set('Please enter a valid IP address.');
+      this.wifiConnectError.set('Veuillez entrer une adresse IP valide.');
       return;
     }
 
@@ -863,15 +863,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.isConnectingWifi.set(false);
         const cr = res?.connect_result;
         if (cr?.success) {
-          this.wifiConnectMessage.set(`Connected to ${host}:${port}!`);
+          this.wifiConnectMessage.set(`Connecté à ${host}:${port} !`);
           setTimeout(() => this.wifiConnectMessage.set(null), 4000);
         } else {
-          this.wifiConnectError.set(cr?.message || 'Connection failed. Please check phone IP & Wi-Fi.');
+          this.wifiConnectError.set(cr?.message || 'Échec de connexion. Veuillez vérifier l\'IP et le Wi-Fi.');
         }
       },
       error: (err) => {
         this.isConnectingWifi.set(false);
-        this.wifiConnectError.set(err?.error?.detail || 'Failed to connect. Please check adb connection.');
+        this.wifiConnectError.set(err?.error?.detail || 'Impossible de se connecter. Veuillez vérifier la connexion ADB.');
       }
     });
   }
@@ -881,11 +881,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     const port = Number(this.remoteAdbPort().trim());
 
     if (!host) {
-      this.remoteAdbError.set('Enter the host name or IP address of the ADB server.');
+      this.remoteAdbError.set('Entrez le nom d\'hôte ou l\'adresse IP du serveur ADB.');
       return;
     }
     if (!Number.isInteger(port) || port < 1 || port > 65535) {
-      this.remoteAdbError.set('Enter a port between 1 and 65535.');
+      this.remoteAdbError.set('Entrez un port compris entre 1 et 65535.');
       return;
     }
 
@@ -910,7 +910,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       error: error => {
         this.isConnectingRemoteAdb.set(false);
         this.remoteAdbError.set(
-          error?.error?.detail || 'Unable to test the ADB server endpoint.'
+          error?.error?.detail || 'Impossible de tester le point de terminaison du serveur ADB.'
         );
       }
     });
@@ -919,7 +919,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public activateRemoteAdbServer(): void {
     const tested = this.remoteAdbProbeResult();
     if (!tested?.success) {
-      this.remoteAdbError.set('Test the endpoint before using it.');
+      this.remoteAdbError.set('Testez le point de terminaison avant de l\'utiliser.');
       return;
     }
 
@@ -944,7 +944,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       error: error => {
         this.isActivatingRemoteAdb.set(false);
         this.remoteAdbError.set(
-          error?.error?.detail || 'Unable to use the ADB server endpoint.'
+          error?.error?.detail || 'Impossible d\'utiliser le point de terminaison du serveur ADB.'
         );
       }
     });
@@ -979,7 +979,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       error: error => {
         this.isSwitchingToLocalAdb.set(false);
         this.remoteAdbError.set(
-          error?.error?.detail || 'Unable to switch back to the local ADB server.'
+          error?.error?.detail || 'Impossible de revenir au serveur ADB local.'
         );
       }
     });
@@ -1069,12 +1069,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   public runTask(): void {
     const goal = this.taskGoal().trim();
     if (!goal) {
-      this.errorMessage.set('Please enter a task goal before running.');
+      this.errorMessage.set('Veuillez définir un objectif de tâche avant de lancer.');
       return;
     }
 
     if (!this.isReady()) {
-      this.errorMessage.set('System prerequisites are not satisfied. Please review System Setup first.');
+      this.errorMessage.set('Les prérequis système ne sont pas remplis. Veuillez consulter la Configuration système.');
       this.activeTab.set('diagnostics');
       return;
     }
@@ -1103,7 +1103,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           console.error('Failed to submit task from home page:', err);
           this.isSubmitting.set(false);
           this.errorMessage.set(
-            err?.error?.detail || 'Failed to submit task. Please check server connection.'
+            err?.error?.detail || 'Échec du lancement de la tâche. Veuillez vérifier la connexion au serveur.'
           );
         }
       });

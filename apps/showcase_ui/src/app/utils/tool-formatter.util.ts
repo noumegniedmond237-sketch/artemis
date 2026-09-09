@@ -138,7 +138,7 @@ function parseVideoResultText(text: string): Partial<VideoAnalysisView> {
     return { outcome: 'failed', summary: value };
   }
   if (value.includes('Analysis is already in progress in another video agent')) {
-    return { outcome: 'waiting', summary: 'Another video agent is already analyzing this evidence.' };
+    return { outcome: 'waiting', summary: 'Un autre agent vidéo analyse déjà cet enregistrement.' };
   }
   return { outcome: 'complete', summary: value };
 }
@@ -175,14 +175,14 @@ export function getVideoAnalysisView(tool: any): VideoAnalysisView | null {
   const completedCount = Number(structured.completed_count ?? completedRanges.length ?? 0);
   const totalCount = Number(structured.total_count ?? (completedRanges.length + failedRanges.length));
   const titleByOutcome: Record<VideoAnalysisOutcome, string> = {
-    running: 'Analyzing screen recording',
-    recovering: 'Analyzing unfinished recording segment',
-    waiting: 'Waiting for existing video analysis',
+    running: 'Analyse de l\'enregistrement d\'écran',
+    recovering: 'Analyse du segment d\'enregistrement non terminé',
+    waiting: 'En attente de l\'analyse vidéo existante',
     complete: structured.reuse === 'full' || parsed.reuse === 'full'
-      ? 'Reused video analysis'
-      : 'Analyzed screen recording',
-    partial: 'Video analysis partially completed',
-    failed: 'Video analysis returned no result'
+      ? 'Analyse vidéo réutilisée'
+      : 'Enregistrement d\'écran analysé',
+    partial: 'Analyse vidéo partiellement terminée',
+    failed: 'L\'analyse vidéo n\'a retourné aucun résultat'
   };
 
   return {
@@ -294,16 +294,16 @@ export function getToolAgentName(tool: any): string | null {
     return null; // Omit self-healing label per user instruction
   }
   if (name.includes('outputter')) {
-    return 'Outputter';
+    return 'Synthétiseur';
   }
   if (name.includes('validator')) {
-    return 'Validator';
+    return 'Validateur';
   }
   if (name.includes('diagnos')) {
-    return 'Diagnoser';
+    return 'Diagnostiqueur';
   }
   if (name.includes('explorer')) {
-    return 'Explorer';
+    return 'Explorateur';
   }
   return null;
 }
@@ -559,7 +559,7 @@ export function getToolDisplayLabel(tool: any, isFirstSaveNote: boolean = false)
       const rawApp = args.app_name || args.package_name || args.app || '';
       const app = rawApp ? (rawApp.charAt(0).toUpperCase() + rawApp.slice(1)) : 'Application';
       const rawAction = args.action ? String(args.action).toLowerCase() : '';
-      const verb = rawAction === 'launch' ? 'Launching' : (rawAction === 'stop' || rawAction === 'close' ? 'Stopping' : 'Managing');
+      const verb = rawAction === 'launch' ? 'Lancement de' : (rawAction === 'stop' || rawAction === 'close' ? 'Arrêt de' : 'Gestion de');
       return `${verb} "${app}"`;
     }
 
@@ -567,143 +567,143 @@ export function getToolDisplayLabel(tool: any, isFirstSaveNote: boolean = false)
     case 'wait_delay':
     case 'wait': {
       const delay = args.delay_seconds || args.seconds || args.delay || args.duration;
-      return delay ? `Waiting for ${delay} second${Number(delay) > 1 ? 's' : ''}...` : 'Waiting for delay...';
+      return delay ? `Attente de ${delay} seconde${Number(delay) > 1 ? 's' : ''}...` : 'En attente...';
     }
     case 'wait_for_text': {
       const text = args.text || args.target_text || '';
-      return text ? `Waiting for text "${text}" to appear on screen` : 'Waiting for text on screen';
+      return text ? `Attente de l'apparition du texte "${text}"` : 'Attente du texte à l\'écran';
     }
 
     case 'input_text':
     case 'input': {
       const text = args.text || args.input_text || '';
-      return text ? `Entering text "${text}" into field` : 'Entering text into input field';
+      return text ? `Saisie du texte "${text}" dans le champ` : 'Saisie de texte dans le champ';
     }
     case 'focus_and_input_text': {
       const text = args.text || args.input_text || '';
-      return text ? `Focusing field and typing "${text}"` : 'Focusing field and entering text';
+      return text ? `Sélection du champ et saisie de "${text}"` : 'Sélection du champ et saisie';
     }
     case 'focus_and_clear_text':
-      return 'Focusing and clearing field text';
+      return 'Sélection et effacement du texte du champ';
 
     case 'click':
     case 'tap': {
       const target = args.target_text || args.text || args.query || '';
-      return target ? `Tapping on "${target}"` : 'Tapping on screen element';
+      return target ? `Appui sur "${target}"` : 'Appui sur un élément de l\'écran';
     }
     case 'click_sequence':
-      return 'Executing click sequence';
+      return 'Exécution d\'une séquence de clics';
     case 'long_press': {
       const target = args.target_text || args.text || '';
-      return target ? `Long pressing on "${target}"` : 'Long pressing screen element';
+      return target ? `Appui long sur "${target}"` : 'Appui long sur l\'élément';
     }
     case 'swipe': {
       const dir = args.action || args.direction || '';
-      return dir ? `Swiping ${String(dir).toUpperCase()} on screen` : 'Swiping screen';
+      return dir ? `Balayage ${String(dir).toUpperCase()} de l'écran` : 'Balayage de l\'écran';
     }
     case 'press_key': {
       const key = args.key || args.keycode || '';
-      return key ? `Pressing key ${String(key).toUpperCase()}` : 'Pressing hardware key';
+      return key ? `Appui sur la touche ${String(key).toUpperCase()}` : 'Appui sur touche matérielle';
     }
 
     case 'save_note':
-      return isFirstSaveNote ? 'Creating note' : 'Saving note';
+      return isFirstSaveNote ? 'Création de la note' : 'Enregistrement de la note';
     case 'read_note':
-      return 'Reading note';
+      return 'Lecture de la note';
     case 'list_notes':
-      return 'Browsing all saved notes';
+      return 'Consultation des notes enregistrées';
     case 'update_note':
-      return 'Updating note';
+      return 'Mise à jour de la note';
     case 'append_note':
-      return 'Updating note';
+      return 'Mise à jour de la note';
 
     case 'object_detection': {
       const q = Array.isArray(args.queries) ? args.queries.join(', ') : (args.queries || '');
-      return q ? `Locating on screen: "${q}"` : 'Locating elements on screen';
+      return q ? `Localisation à l'écran : "${q}"` : 'Localisation d\'éléments à l\'écran';
     }
     case 'ask_explorer': {
       const query = args.query || args.prompt || '';
-      return query ? `Searching on screen: "${query}"` : 'Searching on screen';
+      return query ? `Recherche à l'écran : "${query}"` : 'Recherche à l\'écran';
     }
     case 'report_failure_analysis': {
       const reason = args.reason || args.analysis || '';
-      return reason ? `Investigating issue: ${reason}` : 'Investigating execution issue';
+      return reason ? `Investigation de l'incident : ${reason}` : 'Investigation d\'un incident d\'exécution';
     }
     case 'run_adb_command':
     case 'run_short_adb_command': {
       const cmd = args.command || args.cmd || '';
-      return cmd ? `Running command: ${cmd}` : 'Running system command';
+      return cmd ? `Exécution de la commande : ${cmd}` : 'Exécution d\'une commande système';
     }
     case 'search_logs':
     case 'read_logs': {
       const q = args.query || args.filter || '';
-      return q ? `Searching logs for "${q}"` : 'Analyzing system logs';
+      return q ? `Recherche dans les journaux pour "${q}"` : 'Analyse des journaux système';
     }
     case 'log_analyzer':
     case 'output_analyzer':
-      return 'Analyzing logs';
+      return 'Analyse des journaux';
     case 'diagnoser':
     case 'diagnose':
-      return 'Diagnosing issue';
+      return 'Diagnostic de l\'incident';
     case 'video_analyzer':
     case 'video_analyzer_pure':
-      return 'Analyzing screen recording';
+      return 'Analyse de l\'enregistrement d\'écran';
     case 'extract_segment_metadata': {
       const start = args.start_time !== undefined ? `${args.start_time}s` : '';
       const end = args.end_time !== undefined ? `${args.end_time}s` : '';
-      const range = (start && end) ? ` (${start} - ${end})` : (start ? ` (from ${start})` : '');
-      return `Cropping screen recording segment${range}`;
+      const range = (start && end) ? ` (${start} - ${end})` : (start ? ` (dès ${start})` : '');
+      return `Découpage du segment vidéo${range}`;
     }
     case 'spawn_sub_agent': {
       const q = args.specific_query || args.query || args.prompt || '';
-      return q ? `Analyzing recording with sub-agent: "${q}"` : 'Analyzing recording with sub-agent';
+      return q ? `Analyse de l'enregistrement par sous-agent : "${q}"` : 'Analyse de l\'enregistrement par sous-agent';
     }
     case 'analyze_audio_only': {
       const q = args.specific_query || args.query || '';
-      return q ? `Analyzing audio track: "${q}"` : 'Analyzing recording audio track';
+      return q ? `Analyse de la piste audio : "${q}"` : 'Analyse de la piste audio';
     }
     case 'search_history': {
       const q = args.query || '';
       const range = Array.isArray(args.step_range) && args.step_range.length
-        ? ` in steps ${args.step_range[0]}–${args.step_range[args.step_range.length - 1]}`
+        ? ` dans les étapes ${args.step_range[0]}–${args.step_range[args.step_range.length - 1]}`
         : '';
-      return q ? `Searching execution history for "${q}"${range}` : `Searching execution history${range}`;
+      return q ? `Recherche dans l'historique pour "${q}"${range}` : `Recherche dans l'historique d'exécution${range}`;
     }
     case 'replay_steps': {
       const n = args.start_step;
       const end = args.end_step;
       if (n !== undefined && n !== '' && end !== undefined && end !== null && end !== '' && String(end) !== String(n)) {
-        return `Reviewing steps ${n}–${end}`;
+        return `Examen des étapes ${n}–${end}`;
       }
-      return n !== undefined && n !== '' ? `Reviewing step ${n}` : 'Reviewing step details';
+      return n !== undefined && n !== '' ? `Examen de l'étape ${n}` : 'Examen des détails de l\'étape';
     }
     case 'get_step_screenshot': {
       const n = args.step_number;
       const variant = String(args.which || '').toLowerCase();
       if (variant === 'overlay') {
-        return n !== undefined && n !== '' ? `Looking at where step ${n}'s action landed` : 'Looking at where an action landed';
+        return n !== undefined && n !== '' ? `Visualisation du résultat de l'action de l'étape ${n}` : 'Visualisation du résultat de l\'action';
       }
-      const which = variant === 'post' ? 'after' : 'before';
-      return n !== undefined && n !== '' ? `Looking at the screen ${which} step ${n}` : 'Looking at a step screenshot';
+      const which = variant === 'post' ? 'après' : 'avant';
+      return n !== undefined && n !== '' ? `Capture d'écran ${which} l'étape ${n}` : 'Capture d\'écran d\'une étape';
     }
     case 'probe_device': {
       const kind = args.kind ? String(args.kind).replace(/_/g, ' ') : '';
-      return kind ? `Reading ${kind} from the device` : 'Reading device state';
+      return kind ? `Lecture de ${kind} depuis l'appareil` : 'Lecture de l\'état de l\'appareil';
     }
     case 'outputter':
     case 'output_synthesis':
-      return 'Synthesizing output report';
+      return 'Synthèse du rapport final';
     case 'web_search': {
       const q = args.query || '';
-      return q ? `Searching web for "${q}"` : 'Searching the web';
+      return q ? `Recherche web pour "${q}"` : 'Recherche sur le Web';
     }
     case 'read_url':
-      return 'Fetching web page';
+      return 'Chargement de la page web';
     case 'compress_history':
       return getCompressionLabel(tool);
 
     default:
-      return `Executing ${cleanName.split('_').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`;
+      return `Exécution de ${cleanName.split('_').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`;
   }
 }
 
@@ -721,39 +721,39 @@ export function getCompressionLabel(tool: any): string {
   const end = Number(args.end_step);
   const hasRange = Number.isFinite(start) && Number.isFinite(end) && start > 0 && end > 0;
   const range = hasRange
-    ? (start === end ? `step ${start}` : `steps ${start}–${end}`)
-    : 'earlier steps';
+    ? (start === end ? `l'étape ${start}` : `les étapes ${start}–${end}`)
+    : 'les étapes précédentes';
   const rangeCapitalized = range.charAt(0).toUpperCase() + range.slice(1);
   const status = String(tool?.status || '').toLowerCase();
 
   if (status === 'failed') {
-    return `Couldn't condense ${range} yet; keeping the full record and retrying later`;
+    return `Impossible de condenser ${range} pour l'instant ; historique conservé et nouvelle tentative ultérieure`;
   }
   if (status !== 'success') {
     return String(args.note || '').toLowerCase() === 'retrying'
-      ? `Retrying the memory summary for ${range}…`
-      : `Condensing ${range} into a short memory to free up room…`;
+      ? `Nouvelle tentative de résumé mémoire pour ${range}…`
+      : `Condensation de ${range} en mémoire courte pour libérer de la place…`;
   }
 
   const parts: string[] = [];
   const source = Number(args.source_tokens);
   const summary = Number(args.summary_tokens);
   if (args.forced) {
-    parts.push(`${rangeCapitalized} replaced by a brief snapshot (memory was nearly full)`);
+    parts.push(`${rangeCapitalized} remplacé par un instantané concis (mémoire presque pleine)`);
   } else {
-    parts.push(`${rangeCapitalized} condensed into a short memory`);
+    parts.push(`${rangeCapitalized} condensé en mémoire courte`);
     if (source > 0 && summary > 0) {
       const factor = source / summary;
-      const factorText = factor >= 2 ? ` (${Math.round(factor)}× smaller)` : '';
-      parts.push(`${formatTokenFigure(source)} → ${formatTokenFigure(summary)} tokens${factorText}`);
+      const factorText = factor >= 2 ? ` (${Math.round(factor)}× plus compact)` : '';
+      parts.push(`${formatTokenFigure(source)} → ${formatTokenFigure(summary)} jetons${factorText}`);
     }
   }
   const context = Number(args.context_tokens);
   const budget = Number(args.context_budget);
   if (context > 0) {
     parts.push(budget > 0
-      ? `working memory ≈ ${formatTokenFigure(context)} of ${formatTokenFigure(budget)} tokens`
-      : `working memory ≈ ${formatTokenFigure(context)} tokens`);
+      ? `mémoire de travail ≈ ${formatTokenFigure(context)} sur ${formatTokenFigure(budget)} jetons`
+      : `mémoire de travail ≈ ${formatTokenFigure(context)} jetons`);
   }
   return parts.join(' · ');
 }
@@ -836,76 +836,76 @@ export function getToolIcon(tool: any): string {
  * Get formatted title for a tool call card
  */
 export function getToolTitle(tool: any): string {
-  if (!tool || !tool.name) return 'Tool Call';
+  if (!tool || !tool.name) return 'Appel d\'outil';
   const cleanName = tool.name.replace(/^(_)?exec_/, '');
   const name = cleanName.toLowerCase();
   switch (name) {
     case 'click':
     case 'tap':
-      return 'Tapping Element';
+      return 'Appui sur l\'élément';
     case 'click_sequence':
-      return 'Executing Click Sequence';
+      return 'Séquence de clics';
     case 'long_press':
-      return 'Long Pressing Element';
+      return 'Appui long sur l\'élément';
     case 'input_text':
     case 'input':
-      return 'Entering Text';
+      return 'Saisie de texte';
     case 'swipe':
     case 'scroll': {
       const args = getToolArgs(tool);
       const dir = args.direction || args.gesture || (typeof args.action === 'string' ? args.action : '');
-      if (dir && isPureDirectionString(dir)) return `Swiping Screen (${String(dir).toUpperCase()})`;
-      return 'Swiping Screen';
+      if (dir && isPureDirectionString(dir)) return `Balayage de l'écran (${String(dir).toUpperCase()})`;
+      return 'Balayage de l\'écran';
     }
     case 'drag':
     case 'drag_and_drop':
-      return 'Dragging Screen';
+      return 'Glissement sur l\'écran';
     case 'press_key':
-      return 'Pressing Hardware Key';
+      return 'Appui sur touche matérielle';
     case 'manage_app':
     case 'launch_app': {
       const args = getToolArgs(tool);
       const rawAction = args.action ? String(args.action).toLowerCase() : '';
-      if (rawAction === 'launch') return 'Launching Application';
-      if (rawAction === 'stop' || rawAction === 'close') return 'Stopping Application';
-      return 'Managing Application';
+      if (rawAction === 'launch') return 'Lancement de l\'application';
+      if (rawAction === 'stop' || rawAction === 'close') return 'Arrêt de l\'application';
+      return 'Gestion de l\'application';
     }
     case 'wait_for_delay':
     case 'wait_delay':
-      return 'Waiting for Delay';
+      return 'Attente';
     case 'wait_for_text':
-      return 'Waiting for Text';
+      return 'Attente de texte';
     case 'object_detection':
-      return 'Locating Elements';
+      return 'Localisation d\'éléments';
     case 'ask_explorer':
-      return 'Searching on Screen';
+      return 'Recherche à l\'écran';
     case 'report_failure_analysis':
-      return 'Investigating Issue';
+      return 'Investigation de l\'incident';
     case 'run_adb_command':
     case 'run_short_adb_command':
-      return 'Running System Command';
+      return 'Commande système';
     case 'web_search':
-      return 'Web Search';
+      return 'Recherche Web';
     case 'read_url':
-      return 'Fetching Web Page';
+      return 'Chargement de page Web';
     case 'search_logs':
     case 'read_logs':
-      return 'Searching Logs';
+      return 'Recherche dans les journaux';
     case 'log_analyzer':
     case 'output_analyzer':
-      return 'Analyzing Logs';
+      return 'Analyse des journaux';
     case 'diagnoser':
     case 'diagnose':
-      return 'Diagnosing Issue';
+      return 'Diagnostic de l\'incident';
     case 'video_analyzer':
     case 'video_analyzer_pure':
-      return 'Analyzing Screen Recording';
+      return 'Analyse de l\'enregistrement vidéo';
     case 'extract_segment_metadata':
-      return 'Cropping Screen Recording';
+      return 'Découpage du segment vidéo';
     case 'spawn_sub_agent':
-      return 'Delegating Video Analysis';
+      return 'Délégation d\'analyse vidéo';
     case 'analyze_audio_only':
-      return 'Analyzing Audio Track';
+      return 'Analyse de la piste audio';
     default:
       return cleanName.replace(/_/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
   }
@@ -972,10 +972,10 @@ export function getToolTargetText(tool: any): string {
     return args.target;
   }
   if (args.target && typeof args.target === 'number') {
-    return `Element #${args.target}`;
+    return `Élément #${args.target}`;
   }
   if (args.index !== undefined) {
-    return `Element #${args.index}`;
+    return `Élément #${args.index}`;
   }
   return args.target_text || args.target_description || args.target_class || args.element || args.element_text || (name !== 'input_text' ? args.text : '') || '';
 }
@@ -984,10 +984,10 @@ export function getToolTargetText(tool: any): string {
  * Get input label for tools
  */
 export function getToolInputLabel(tool: any): string {
-  if (!tool || !tool.name) return 'Input';
+  if (!tool || !tool.name) return 'Entrée';
   const name = tool.name.toLowerCase().replace(/^(_)?exec_/, '');
   if (name === 'wait_for_delay' || name === 'wait_delay' || name === 'delay' || name === 'wait') {
-    return 'Duration';
+    return 'Durée';
   }
   if (name === 'swipe' || name === 'scroll' || name === 'drag' || name === 'drag_and_drop') {
     const args = getToolArgs(tool);
@@ -995,15 +995,15 @@ export function getToolInputLabel(tool: any): string {
     if (dir && isPureDirectionString(dir)) {
       return 'Direction';
     }
-    return 'Input';
+    return 'Entrée';
   }
   if (name === 'press_key' || name === 'press_home' || name === 'press_back') {
-    return 'Key';
+    return 'Touche';
   }
   if (name === 'input_text' || name === 'input') {
-    return 'Input Text';
+    return 'Texte saisi';
   }
-  return 'Input';
+  return 'Entrée';
 }
 
 /**
@@ -1158,14 +1158,14 @@ export function isToolFailed(tool: any): boolean {
  * Get error message for a failed tool
  */
 export function getToolErrorMessage(tool: any): string {
-  if (!tool) return 'Tool Failed';
+  if (!tool) return 'Échec de l\'outil';
   const args = getToolArgs(tool);
-  if (args.status === 'cannot_fix') return 'Status: cannot_fix';
+  if (args.status === 'cannot_fix') return 'Statut : impossible_de_corriger';
   if (args.error || args.message || args.failure_reason) {
     return args.error || args.message || args.failure_reason;
   }
   if (tool.error || tool.message) return tool.error || tool.message;
-  return 'Action Failed';
+  return 'Échec de l\'action';
 }
 
 /**
@@ -1301,7 +1301,7 @@ export function cleanErrorMessage(rawError: any): string {
   }
 
   const errorStr = String(rawError).trim();
-  if (!errorStr) return 'Unknown error';
+  if (!errorStr) return 'Erreur inconnue';
 
   // 1. Try regex extraction for "message": "..."
   const doubleQuoteMsgMatch = errorStr.match(/"message"\s*:\s*"((?:[^"\\]|\\.)*)"/i);
@@ -1353,5 +1353,5 @@ export function cleanErrorMessage(rawError: any): string {
     .replace(/^(?:LLM\s+(?:Request\s+)?Error\s*:\s*)+/i, '')
     .trim();
 
-  return fallback || 'Unknown error';
+  return fallback || 'Erreur inconnue';
 }

@@ -112,13 +112,13 @@ export class WorkspaceComponent implements OnInit {
       const truncated = session.initial_goal.length > 45
         ? session.initial_goal.substring(0, 42) + '...'
         : session.initial_goal;
-      return `Stop current task: "${truncated}"`;
+      return `Arrêter la tâche en cours : "${truncated}"`;
     }
     const curId = this.agentService.currentSessionId();
     if (curId) {
-      return `Stop current task (${curId})`;
+      return `Arrêter la tâche en cours (${curId})`;
     }
-    return 'Stop current running task';
+    return 'Arrêter la tâche en cours d\'exécution';
   });
 
   /**
@@ -244,7 +244,7 @@ export class WorkspaceComponent implements OnInit {
       error: (err) => {
         console.error('Failed to submit task:', err);
         this.isSubmitting.set(false);
-        this.errorMessage.set(err.error?.detail || 'The runner is busy. Please wait for current task to finish.');
+        this.errorMessage.set(err.error?.detail || 'L\'exécuteur est occupé. Veuillez attendre la fin de la tâche en cours.');
         setTimeout(() => {
           this.errorMessage.set(null);
         }, 5000);

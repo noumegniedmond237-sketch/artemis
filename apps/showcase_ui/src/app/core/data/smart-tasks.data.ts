@@ -80,9 +80,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 1. Google Maps
   {
     id: 'maps_coffee',
-    title: 'Find Specialty Coffee',
-    description: 'Search nearby top-rated cafes in Google Maps',
-    goal: 'Open Google Maps, search for top-rated specialty coffee shops nearby, and view the top result details.',
+    title: 'Trouver un café de spécialité',
+    description: 'Rechercher les cafés les mieux notés à proximité sur Google Maps',
+    goal: 'Ouvrir Google Maps, rechercher les cafés de spécialité les mieux notés à proximité et afficher les détails du premier résultat.',
     profile: 'flash',
     category: 'flash',
     tag: 'Maps',
@@ -92,9 +92,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   },
   {
     id: 'pro_commute_share',
-    title: 'Commute ETA & Message Draft',
-    description: 'Check transit time on Maps and draft arrival ETA in Messages',
-    goal: 'Open Google Maps to check commute time to the International Airport, calculate arrival time, then open Messages and draft an ETA text message.',
+    title: 'Trajet & Message d\'arrivée',
+    description: 'Vérifier le temps de trajet sur Maps et rédiger un SMS avec l\'heure d\'arrivée',
+    goal: 'Ouvrir Google Maps pour vérifier le temps de trajet jusqu\'à l\'aéroport international, calculer l\'heure d\'arrivée, puis ouvrir Messages et rédiger un SMS avec l\'heure estimée.',
     profile: 'pro',
     category: 'cross_app',
     tag: 'Maps + Messages',
@@ -110,9 +110,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 2. Gmail
   {
     id: 'gmail_receipts',
-    title: 'Search Order Receipts',
-    description: 'Find recent flight or delivery confirmation emails in Gmail',
-    goal: 'Open Gmail and search for recent flight or package delivery confirmation emails.',
+    title: 'Rechercher des reçus de commande',
+    description: 'Trouver les emails récents de confirmation de vol ou de livraison dans Gmail',
+    goal: 'Ouvrir Gmail et rechercher les emails récents de confirmation de vol ou de livraison de colis.',
     profile: 'flash',
     category: 'flash',
     tag: 'Gmail',
@@ -122,12 +122,12 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   },
   {
     id: 'pro_email_to_calendar',
-    title: 'Email Itinerary to Calendar',
-    description: 'Extract flight or event dates from Gmail and schedule in Calendar',
-    goal: 'Open Gmail to find the latest event invitation or itinerary, extract dates and location, then open Google Calendar and create a corresponding calendar event.',
+    title: 'Itinéraire email vers Agenda',
+    description: 'Extraire les dates de vol ou d\'événement depuis Gmail et les planifier dans l\'Agenda',
+    goal: 'Ouvrir Gmail pour trouver la dernière invitation ou itinéraire, extraire les dates et le lieu, puis ouvrir Google Agenda et créer l\'événement correspondant.',
     profile: 'pro',
     category: 'cross_app',
-    tag: 'Gmail + Calendar',
+    tag: 'Gmail + Agenda',
     apps: [
       { name: 'Gmail', icon: 'mail', pkg: 'com.google.android.gm' },
       { name: 'Calendar', icon: 'calendar_month', pkg: 'com.google.android.calendar' }
@@ -139,9 +139,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 3. Chrome
   {
     id: 'chrome_research',
-    title: 'Search AI News Breakthroughs',
-    description: 'Search latest multimodal AI developments in Chrome browser',
-    goal: 'Open Chrome browser and search for latest breakthroughs in multimodal mobile AI agents.',
+    title: 'Rechercher les actualités IA',
+    description: 'Rechercher les dernières avancées en IA multimodale dans Chrome',
+    goal: 'Ouvrir le navigateur Chrome et rechercher les dernières avancées concernant les agents IA mobiles multimodaux.',
     profile: 'flash',
     category: 'flash',
     tag: 'Chrome',
@@ -151,9 +151,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   },
   {
     id: 'pro_research_keep',
-    title: 'Product Research & Notes Note',
-    description: 'Compare top 3 headphones on Chrome and record comparison in Keep',
-    goal: 'Open Chrome, research top 3 noise-cancelling headphones comparing price and battery life, then write a structured comparison summary note in Keep Notes.',
+    title: 'Recherche produit & Note Keep',
+    description: 'Comparer les 3 meilleurs casques sur Chrome et noter la comparaison dans Keep',
+    goal: 'Ouvrir Chrome, rechercher les 3 meilleurs casques à réduction de bruit en comparant prix et autonomie, puis rédiger un récapitulatif structuré dans Google Keep.',
     profile: 'pro',
     category: 'pro',
     tag: 'Chrome + Keep',
@@ -168,9 +168,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 4. YouTube
   {
     id: 'youtube_lofi',
-    title: 'Play Lo-Fi Music Radio',
-    description: 'Search and play a Lo-Fi hip hop live stream on YouTube',
-    goal: 'Open YouTube, search for "Lofi hip hop beats relaxing radio" and tap on the live stream.',
+    title: 'Lancer une radio Lo-Fi',
+    description: 'Rechercher et lancer un stream musical Lo-Fi relaxant sur YouTube',
+    goal: 'Ouvrir YouTube, rechercher "Lofi hip hop beats relaxing radio" et appuyer sur le direct.',
     profile: 'flash',
     category: 'flash',
     tag: 'YouTube',
@@ -182,24 +182,24 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 5. Settings
   {
     id: 'settings_display_wifi',
-    title: 'Dark Mode & Wi-Fi Check',
-    description: 'Toggle dark theme and verify network connection in Settings',
-    goal: 'Open Settings app, navigate to Display settings, ensure Dark theme is enabled, and check Wi-Fi connection status.',
+    title: 'Mode sombre & Vérification Wi-Fi',
+    description: 'Activer le thème sombre et vérifier la connexion réseau dans les Paramètres',
+    goal: 'Ouvrir l\'application Paramètres, aller dans Affichage, vérifier que le thème sombre est activé, et contrôler l\'état du Wi-Fi.',
     profile: 'flash',
     category: 'flash',
-    tag: 'Settings',
+    tag: 'Paramètres',
     apps: [{ name: 'Settings', icon: 'settings', pkg: 'com.android.settings' }],
     requiredPackages: ['com.android.settings'],
     priority: 87
   },
   {
     id: 'pro_settings_qa',
-    title: 'Subsystem Health & Crash Probe',
-    description: 'Traverse Settings submenus to verify screens and check for crash dialogs',
-    goal: 'Explore Settings submenus (Network, Connected devices, Apps, Battery, Storage), verify each screen loads properly without ANR or crash dialogs, and summarize results.',
+    title: 'Audit système & Détection de crash',
+    description: 'Parcourir les sous-menus des Paramètres et vérifier l\'absence d\'erreurs',
+    goal: 'Explorer les sous-menus des Paramètres (Réseau, Appareils connectés, Applications, Batterie, Stockage), vérifier que chaque écran s\'affiche sans erreur ni plantage, et synthétiser les résultats.',
     profile: 'pro',
     category: 'monitor',
-    tag: 'Settings QA',
+    tag: 'Paramètres QA',
     apps: [{ name: 'Settings', icon: 'settings', pkg: 'com.android.settings' }],
     requiredPackages: ['com.android.settings'],
     priority: 93
@@ -208,12 +208,12 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 6. Clock
   {
     id: 'clock_timer',
-    title: '25-Min Pomodoro Timer',
-    description: 'Start a 25-minute focus countdown timer in Clock app',
-    goal: 'Open Clock app, switch to Timer tab, set 25 minutes and start the countdown timer.',
+    title: 'Minuteur Pomodoro de 25 min',
+    description: 'Démarrer un compte à rebours de 25 minutes dans l\'application Horloge',
+    goal: 'Ouvrir l\'application Horloge, aller sur l\'onglet Minuteur, régler 25 minutes et lancer le décompte.',
     profile: 'flash',
     category: 'flash',
-    tag: 'Clock',
+    tag: 'Horloge',
     apps: [{ name: 'Clock', icon: 'timer', pkg: 'com.google.android.deskclock' }],
     requiredPackages: ['com.google.android.deskclock', 'com.android.deskclock'],
     priority: 86
@@ -222,12 +222,12 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 7. Calculator
   {
     id: 'calc_gratuity',
-    title: 'Split Bill & Calculate Tip',
-    description: 'Calculate 18% gratuity on $186.40 for 3 people in Calculator',
-    goal: 'Open Calculator and calculate 18% tip on a bill of $186.40, then divide by 3 people.',
+    title: 'Partage d\'addition & Pourboire',
+    description: 'Calculer 18% de pourboire sur 186,40 $ pour 3 personnes dans la Calculatrice',
+    goal: 'Ouvrir la Calculatrice et calculer 18% de pourboire sur une addition de 186,40 $, puis diviser par 3 personnes.',
     profile: 'flash',
     category: 'flash',
-    tag: 'Calculator',
+    tag: 'Calculatrice',
     apps: [{ name: 'Calculator', icon: 'calculate', pkg: 'com.google.android.calculator' }],
     requiredPackages: ['com.google.android.calculator', 'com.android.calculator2'],
     priority: 84
@@ -236,9 +236,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 8. Photos
   {
     id: 'photos_inspect',
-    title: 'Inspect Recent Screenshot',
-    description: 'Open Google Photos and review the latest screenshot taken',
-    goal: 'Open Google Photos and view the most recent screenshot in the screenshots album.',
+    title: 'Inspecter la capture récente',
+    description: 'Ouvrir Google Photos et consulter la dernière capture d\'écran prise',
+    goal: 'Ouvrir Google Photos et afficher la capture d\'écran la plus récente dans l\'album des captures.',
     profile: 'flash',
     category: 'flash',
     tag: 'Photos',
@@ -250,9 +250,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 9. WeChat
   {
     id: 'wechat_browse',
-    title: 'Check WeChat Messages',
-    description: 'Open WeChat and view top recent chat conversations',
-    goal: 'Open WeChat and view the top recent chat messages.',
+    title: 'Consulter les messages WeChat',
+    description: 'Ouvrir WeChat et consulter les conversations récentes',
+    goal: 'Ouvrir WeChat et consulter les messages récents dans la première discussion.',
     profile: 'flash',
     category: 'flash',
     tag: 'WeChat',
@@ -262,12 +262,12 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   },
   {
     id: 'pro_wechat_to_calendar',
-    title: 'WeChat Notice to Calendar',
-    description: 'Extract meeting notice from WeChat chat and add to Calendar',
-    goal: 'Open WeChat, locate the latest meeting announcement or event message in the top chat, extract the time and topic, then open Calendar and schedule an event.',
+    title: 'Annonce WeChat vers Agenda',
+    description: 'Extraire une annonce de réunion depuis WeChat et l\'ajouter à l\'Agenda',
+    goal: 'Ouvrir WeChat, repérer la dernière annonce de réunion dans la discussion principale, extraire l\'heure et l\'objet, puis ouvrir l\'Agenda et planifier l\'événement.',
     profile: 'pro',
     category: 'cross_app',
-    tag: 'WeChat + Calendar',
+    tag: 'WeChat + Agenda',
     apps: [
       { name: 'WeChat', icon: 'forum', pkg: 'com.tencent.mm' },
       { name: 'Calendar', icon: 'calendar_month', pkg: 'com.google.android.calendar' }
@@ -279,9 +279,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 10. Xiaohongshu
   {
     id: 'xhs_coffee_guide',
-    title: 'RED Cafe Guide Search',
-    description: 'Search trending specialty cafe reviews on Xiaohongshu',
-    goal: 'Open Xiaohongshu, search for top-rated specialty coffee shops, and view the top post.',
+    title: 'Recherche avis cafés sur RED',
+    description: 'Rechercher les avis tendances sur les cafés de spécialité sur Xiaohongshu',
+    goal: 'Ouvrir Xiaohongshu, rechercher les cafés de spécialité les mieux notés et consulter la publication principale.',
     profile: 'flash',
     category: 'flash',
     tag: 'Xiaohongshu',
@@ -293,9 +293,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 11. Meituan / Dianping
   {
     id: 'meituan_ramen_search',
-    title: 'Meituan Food Search',
-    description: 'Search top-rated Ramen nearby on Meituan or Dianping',
-    goal: 'Open Meituan or Dianping, search for top-rated Ramen nearby, and view top restaurant rating.',
+    title: 'Recherche restaurants de ramen',
+    description: 'Trouver les meilleurs restaurants de ramen à proximité sur Meituan ou Dianping',
+    goal: 'Ouvrir Meituan ou Dianping, rechercher les meilleurs ramen à proximité et consulter la note du premier restaurant.',
     profile: 'flash',
     category: 'flash',
     tag: 'Meituan',
@@ -307,9 +307,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 12. Bilibili
   {
     id: 'bilibili_stream',
-    title: 'Bilibili Tech Video',
-    description: 'Search and play an AI Agent tutorial video on Bilibili',
-    goal: 'Open Bilibili, search for "AI Agent Architecture", and play the top matching video.',
+    title: 'Vidéo tech sur Bilibili',
+    description: 'Rechercher et lire un tutoriel sur les agents IA sur Bilibili',
+    goal: 'Ouvrir Bilibili, rechercher "AI Agent Architecture" et lancer la première vidéo correspondante.',
     profile: 'flash',
     category: 'flash',
     tag: 'Bilibili',
@@ -321,9 +321,9 @@ export const SMART_TASK_LIBRARY: SmartSuggestion[] = [
   // 13. Play Store
   {
     id: 'pro_playstore_review',
-    title: 'Play Store App Review Study',
-    description: 'Compare top task management apps and ratings on Google Play',
-    goal: 'Open Google Play Store, search for top rated task management apps, compare ratings and latest user reviews of the top 2 candidates, and record recommendations.',
+    title: 'Étude d\'applications Play Store',
+    description: 'Comparer les meilleures applications de gestion de tâches et leurs avis',
+    goal: 'Ouvrir le Google Play Store, rechercher les meilleures applications de gestion de tâches, comparer les notes et avis des 2 premières, et synthétiser les recommandations.',
     profile: 'pro',
     category: 'pro',
     tag: 'Play Store',

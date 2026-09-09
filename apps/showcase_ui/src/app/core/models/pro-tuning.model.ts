@@ -44,89 +44,89 @@ export interface TuningLevel<TId extends string = string> {
 export const VERIFICATION_LEVELS: readonly TuningLevel<VerificationLevelId>[] = [
   {
     id: 'off',
-    label: 'Off',
-    tagline: 'No checking. The run ends as soon as the task looks done.',
-    latency: 'no extra time',
+    label: 'Désactivé',
+    tagline: 'Aucune vérification. L\'exécution se termine dès que la tâche semble achevée.',
+    latency: 'aucun temps supplémentaire',
     runs: [
-      'Each step is treated as finished the moment it is carried out.',
-      'You get the full action trace, but no pass / fail verdict.'
+      'Chaque étape est considérée terminée dès son exécution.',
+      'Vous obtenez la trace complète des actions, sans verdict succès / échec.'
     ],
-    skips: ['Nothing is double-checked and nothing is retried.'],
-    bestFor: 'Quick tries and demos, when you only want to watch what happens.'
+    skips: ['Rien n\'est revérifié et aucune tentative supplémentaire n\'est effectuée.'],
+    bestFor: 'Essais rapides et démonstrations, lorsque vous souhaitez simplement observer ce qui se passe.'
   },
   {
     id: 'final',
-    label: 'At the end',
-    tagline: 'One check of the finished result against your goal. This is the default.',
-    latency: 'adds about 20–60 s at the end',
+    label: 'À la fin',
+    tagline: 'Une vérification du résultat final par rapport à votre objectif. Option par défaut.',
+    latency: 'ajoute environ 20 à 60 s à la fin',
     runs: [
-      'When the task finishes, the final screen, the step history and the device state are compared with what you asked for.',
-      'If the result does not match, the task goes back and tries to fix it, up to 3 times.'
+      'À la fin de la tâche, l\'écran final, l\'historique des étapes et l\'état de l\'appareil sont comparés à votre demande.',
+      'Si le résultat ne correspond pas, l\'agent revient en arrière et tente de corriger, jusqu\'à 3 fois.'
     ],
-    skips: ['Nothing is checked while the task is still running.'],
-    bestFor: 'Everyday tasks: an honest pass / fail without slowing the run down.'
+    skips: ['Rien n\'est vérifié pendant l\'exécution de la tâche.'],
+    bestFor: 'Tâches courantes : un verdict honnête sans ralentir l\'exécution.'
   },
   {
     id: 'checkpoints',
-    label: 'Every step',
-    tagline: 'Each step is checked as soon as it is done, plus the final check.',
-    latency: 'a short check after each step, done in the background',
+    label: 'À chaque étape',
+    tagline: 'Chaque étape est vérifiée dès son exécution, en plus de la vérification finale.',
+    latency: 'courte vérification après chaque étape en arrière-plan',
     runs: [
-      'Every step is checked right after it completes, using the screenshots from that moment.',
-      'If a step went wrong, it gets fixed before moving on (up to 2 tries per step).',
-      'A failed test condition is written down and the task keeps going.',
-      'The final check still runs at the end.'
+      'Chaque étape est contrôlée juste après son exécution à l\'aide des captures de ce moment.',
+      'Si une étape a échoué, elle est corrigée avant de continuer (jusqu\'à 2 essais par étape).',
+      'Une condition échouée est consignée et la tâche continue.',
+      'La vérification finale s\'exécute toujours à la fin.'
     ],
-    bestFor: 'Long tasks where one early mistake would spoil everything after it.'
+    bestFor: 'Tâches longues où une erreur précoce compromettrait toute la suite.'
   },
   {
     id: 'strict',
     label: 'Strict',
-    tagline: 'Every step is checked, with more retries. The first failed test stops the run.',
-    latency: 'slowest: more checks and more retries',
+    tagline: 'Chaque étape est contrôlée avec plus de tentatives. Le premier échec arrête l\'exécution.',
+    latency: 'le plus lent : vérifications et reprises approfondies',
     runs: [
-      'Each check takes longer and gets more attempts: 4 fixes per step and 5 at the end.',
-      'The first failed test condition stops the run immediately, with the evidence attached.'
+      'Chaque vérification prend plus de temps et bénéficie de plus d\'essais : 4 corrections par étape et 5 à la fin.',
+      'La première condition de test non satisfaite arrête immédiatement la tâche, preuves à l\'appui.'
     ],
-    bestFor: 'Release checks and regression runs, where a wrong pass is never acceptable.'
+    bestFor: 'Tests de non-régression et recettes, où un faux positif est inacceptable.'
   }
 ];
 
 export const EXPLORER_MODES: readonly TuningLevel<ExplorerModeId>[] = [
   {
     id: 'flash',
-    label: 'Quick glance',
-    tagline: 'Finds buttons and text on the screen in a single look.',
-    latency: '1 look per search',
+    label: 'Coup d\'œil rapide',
+    tagline: 'Localise les boutons et le texte à l\'écran en un seul regard.',
+    latency: '1 observation par recherche',
     runs: [
-      'Something on screen is asked for by name, icon or colour and its position comes back straight away.',
-      'Several things can be looked up at once.'
+      'Un élément à l\'écran est recherché par son nom, icône ou couleur et sa position est renvoyée immédiatement.',
+      'Plusieurs éléments peuvent être recherchés en même temps.'
     ],
-    skips: ['No zooming in and no second try.'],
-    bestFor: 'Ordinary apps with clearly labelled buttons, icons and text.'
+    skips: ['Pas de zoom avant ni de seconde tentative.'],
+    bestFor: 'Applications classiques avec des boutons, icônes et textes clairement identifiables.'
   },
   {
     id: 'pro',
-    label: 'Second look',
-    tagline: 'Takes up to 3 looks, thinking in between, before answering.',
-    latency: 'up to 3 looks per search',
+    label: 'Double regard',
+    tagline: 'Effectue jusqu\'à 3 observations avec réflexion intermédiaire avant de répondre.',
+    latency: 'jusqu\'à 3 observations par recherche',
     runs: [
-      'The screen layout is read first, then the picture is searched.',
-      'If the first try misses, a different approach is tried within the 3 looks.'
+      'La structure de l\'écran est d\'abord analysée, puis l\'image est inspectée.',
+      'Si la première tentative échoue, une approche différente est tentée au cours des 3 observations.'
     ],
-    skips: ['Still no zooming into small areas, to keep searches short.'],
-    bestFor: 'Things described by where they are ("the switch next to Wi-Fi") or with unclear labels.'
+    skips: ['Pas de zoom sur les petites zones pour garder les recherches rapides.'],
+    bestFor: 'Éléments décrits par leur position ("le bouton à côté du Wi-Fi") ou sans libellé évident.'
   },
   {
     id: 'ultra',
-    label: 'Close-up',
-    tagline: 'Zooms into parts of the screen and takes up to 8 looks.',
-    latency: 'up to 8 looks per search (slowest)',
+    label: 'Gros plan',
+    tagline: 'Zoome sur des parties de l\'écran et prend jusqu\'à 8 observations.',
+    latency: 'jusqu\'à 8 observations par recherche (le plus lent)',
     runs: [
-      'Parts of the screen can be cropped and magnified to read tiny text and crowded layouts piece by piece.',
-      'Later looks reuse the earlier ones, so they cost less time than they sound.'
+      'Des portions de l\'écran peuvent être recadrées et agrandies pour lire les petits textes et interfaces denses.',
+      'Les observations suivantes réutilisent les précédentes pour optimiser le temps.'
     ],
-    bestFor: 'Crowded screens, tiny targets, charts and drawings, and checks where exact placement matters.'
+    bestFor: 'Écrans denses, cibles minuscules, graphiques et vérifications où l\'emplacement exact est crucial.'
   }
 ];
 

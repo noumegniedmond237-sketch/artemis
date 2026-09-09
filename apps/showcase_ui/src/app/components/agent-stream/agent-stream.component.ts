@@ -34,22 +34,22 @@ import {
 } from '../../utils/run-info.util';
 
 export const PLANNING_LOADER_PHRASES: string[] = [
-  'Planning next step...',
-  'Analyzing screen coordinates...',
-  'Consulting neural network...',
-  'Formulating tactical action plan...',
-  'Deciphering UI state & elements...',
-  'Synthesizing decision pathways...',
-  'Calibrating next move...',
-  'Aligning logical vectors...',
-  'Evaluating optimal sub-goals...',
-  'Gathering sensory inputs...',
-  'Computing next interaction...',
-  'Optimizing execution strategy...',
-  'Simulating probable outcomes...',
-  'Summoning AI intuition...',
-  'Brewing the next command...',
-  'Strategizing tactical moves...'
+  'Planification de la prochaine étape...',
+  'Analyse des coordonnées à l\'écran...',
+  'Consultation du réseau neuronal...',
+  'Formulation du plan d\'action tactique...',
+  'Déchiffrage de l\'état de l\'interface & des éléments...',
+  'Synthèse des parcours de décision...',
+  'Calibration du prochain mouvement...',
+  'Alignement des vecteurs logiques...',
+  'Évaluation des sous-objectifs optimaux...',
+  'Collecte des signaux sensoriels...',
+  'Calcul de la prochaine interaction...',
+  'Optimisation de la stratégie d\'exécution...',
+  'Simulation des résultats probables...',
+  'Appel à l\'intuition IA...',
+  'Préparation de la prochaine commande...',
+  'Élaboration des actions tactiques...'
 ];
 
 export interface StartupWorkItem extends StartupProgressEvent {
@@ -67,17 +67,17 @@ const STARTUP_WORK_STAGES: StartupWorkStage[] = [
   {
     started: 'device_check',
     completed: 'device_ready',
-    completedMessage: 'Android device connected'
+    completedMessage: 'Appareil Android connecté'
   },
   {
     started: 'uiautomator',
     completed: 'uiautomator_ready',
-    completedMessage: 'UI Automator is ready'
+    completedMessage: 'UI Automator est prêt'
   },
   {
     started: 'environment',
     completed: 'environment_ready',
-    completedMessage: 'Device environment is ready'
+    completedMessage: 'Environnement de l\'appareil prêt'
   }
 ];
 
@@ -866,6 +866,19 @@ export class AgentStreamComponent implements AfterViewInit {
     return 'completed';
   }
 
+  public getTaskStatusLabel(session: Session): string {
+    const status = this.getTaskStatus(session);
+    switch (status) {
+      case 'running': return 'EN COURS';
+      case 'paused': return 'EN PAUSE';
+      case 'completed': return 'TERMINÉE';
+      case 'pending': return 'EN ATTENTE';
+      case 'failed': return 'ÉCHOUÉE';
+      case 'cancelled': return 'ANNULÉE';
+      default: return String(status).toUpperCase();
+    }
+  }
+
   /**
    * Determine the device serial number for the session
    */
@@ -1211,7 +1224,7 @@ export class AgentStreamComponent implements AfterViewInit {
     if (!message) return '';
     if (isWaiting) return message;
     return message
-      .replace(/[,.\s]*(?:Retrying automatically(?:\.{3}|\.\.\.)?)\s*$/i, '')
+      .replace(/[,.\s]*(?:Retrying automatically(?:\.{3}|\.\.\.)?|Nouvelle tentative automatique(?:\.{3}|\.\.\.)?)\s*$/i, '')
       .trim();
   }
 
@@ -1516,23 +1529,23 @@ export class AgentStreamComponent implements AfterViewInit {
 
   public getScreenRecordingButtonTitle(): string {
     if (this.agentService.isCurrentSessionRunning()) {
-      return 'Task is currently running (Recording screen)';
+      return 'La tâche est en cours d\'exécution (Enregistrement de l\'écran)';
     }
     if (this.agentService.currentSessionRecordingStatus() === 'processing') {
-      return 'Preparing screen recording...';
+      return 'Préparation de l\'enregistrement de l\'écran...';
     }
     if (this.agentService.currentSessionVideoUrl()) {
-      return 'Play Screen Recording Video';
+      return 'Lire la vidéo d\'enregistrement de l\'écran';
     }
     if (this.agentService.hasCurrentSessionStepFrames()) {
       return this.agentService.currentSessionRecordingStatus() === 'failed'
-        ? 'Video recording failed — Click to replay step-by-step screenshots'
-        : 'Play step-by-step screenshots replay';
+        ? 'Échec de l\'enregistrement vidéo — Cliquez pour rejouer les captures étape par étape'
+        : 'Rejouer les captures d\'écran étape par étape';
     }
     if (this.agentService.currentSessionRecordingStatus() === 'failed') {
-      return 'Screen recording generation failed';
+      return 'Échec de la génération de l\'enregistrement';
     }
-    return 'Screen Recording';
+    return 'Enregistrement de l\'écran';
   }
 
   public isDeviceActionTool(tool: any): boolean {
@@ -1601,11 +1614,11 @@ export class AgentStreamComponent implements AfterViewInit {
   public getCheckerPhaseLabel(block: any): string {
     switch (block?.data?.phase) {
       case 'final':
-        return 'Final check';
+        return 'Vérification finale';
       case 'outcome':
-        return 'Result';
+        return 'Résultat';
       default:
-        return 'Check';
+        return 'Vérification';
     }
   }
 
@@ -1622,8 +1635,8 @@ export class AgentStreamComponent implements AfterViewInit {
 
   /** How the item is judged, in plain words (verify = must pass, assert = recorded test result). */
   public getCheckMethodLabel(item: any, block: any): string {
-    const parts: string[] = [item?.kind === 'assert' ? 'Test assertion' : 'Must pass'];
-    if (item?.when === 'at_end' && block?.data?.phase !== 'final') parts.push('at the end');
+    const parts: string[] = [item?.kind === 'assert' ? 'Assertion de test' : 'Doit réussir'];
+    if (item?.when === 'at_end' && block?.data?.phase !== 'final') parts.push('à la fin');
     return parts.join(' · ');
   }
 
@@ -1642,15 +1655,15 @@ export class AgentStreamComponent implements AfterViewInit {
   public getVerdictStatusText(status: string): string {
     switch (status) {
       case 'passed':
-        return 'Passed';
+        return 'Réussi';
       case 'failed':
-        return 'Failed';
+        return 'Échoué';
       case 'inconclusive':
-        return 'Could not be confirmed';
+        return 'Non confirmé';
       case 'superseded':
-        return 'Superseded by a newer check';
+        return 'Remplacé par une vérification plus récente';
       case 'unchecked':
-        return 'Not checked';
+        return 'Non vérifié';
       default:
         return status || '';
     }
@@ -1668,9 +1681,9 @@ export class AgentStreamComponent implements AfterViewInit {
     if (d.phase === 'outcome') return Array.isArray(d.last_findings) ? d.last_findings : [];
     const notes: string[] = [];
     if (Array.isArray(d.unmet_subgoals)) {
-      for (const text of d.unmet_subgoals) notes.push(`Not finished yet: ${text}`);
+      for (const text of d.unmet_subgoals) notes.push(`Non terminé : ${text}`);
     }
-    if (d.reverted) notes.push('The step was sent back to be redone.');
+    if (d.reverted) notes.push('L\'étape a été renvoyée pour être recommencée.');
     if (d.error) notes.push(String(d.error));
     return notes;
   }
@@ -1722,32 +1735,32 @@ export class AgentStreamComponent implements AfterViewInit {
     const d = block?.data || {};
     if (d.phase === 'outcome') {
       const t = d.tests || {};
-      const label = d.task_status === 'completed' ? 'Goal completed'
-        : (d.task_status === 'blocked' ? 'Blocked' : 'Partially completed');
+      const label = d.task_status === 'completed' ? 'Objectif atteint'
+        : (d.task_status === 'blocked' ? 'Bloqué' : 'Partiellement terminé');
       const counts = [
-        [t.passed, 'passed'],
-        [t.failed, 'failed'],
-        [t.inconclusive, 'inconclusive'],
-        [t.unchecked, 'not checked']
+        [t.passed, 'réussi(s)'],
+        [t.failed, 'échoué(s)'],
+        [t.inconclusive, 'non concluant(s)'],
+        [t.unchecked, 'non vérifié(s)']
       ]
         .filter(([n]) => Number(n) > 0)
         .map(([n, word]) => `${n} ${word}`);
       return counts.length > 0 ? `${label} · ${counts.join(' · ')}` : label;
     }
-    if (d.isCompleted === false) return 'Checking…';
+    if (d.isCompleted === false) return 'Vérification en cours…';
     switch (d.status) {
       case 'superseded':
-        return 'Superseded';
+        return 'Remplacé';
       case 'unchecked':
-        return 'Not checked';
+        return 'Non vérifié';
       case 'error':
-        return 'No verdict';
+        return 'Sans verdict';
     }
     const verdicts = this.getCheckerVerdicts(block);
     const failed = verdicts.filter((v) => v.status === 'failed').length;
-    if (failed > 0) return `${failed} failed`;
-    if (verdicts.some((v) => v.status === 'inconclusive')) return 'Inconclusive';
-    return verdicts.length > 0 ? 'Passed' : 'Done';
+    if (failed > 0) return `${failed} échoué(s)`;
+    if (verdicts.some((v) => v.status === 'inconclusive')) return 'Non concluant';
+    return verdicts.length > 0 ? 'Réussi' : 'Terminé';
   }
 
   public getVerdictIcon(status: string): string {
@@ -1815,7 +1828,7 @@ export class AgentStreamComponent implements AfterViewInit {
   }
 
   public getLLMErrorText(tool: any): string {
-    const noDetails = 'The AI provider did not return error details after the request failed.';
+    const noDetails = 'Le fournisseur IA n\'a pas retourné de détails d\'erreur après l\'échec de la requête.';
     if (!tool) return noDetails;
     const rawError = tool.payload?.error || tool.error;
     if (!rawError) return noDetails;
@@ -2003,13 +2016,13 @@ export class AgentStreamComponent implements AfterViewInit {
   public getStatusLabel(status: string): string {
     switch (status) {
       case 'idle':
-        return 'Idle';
+        return 'Inactif';
       case 'running':
-        return 'Running';
+        return 'En cours';
       case 'completed':
-        return 'Completed';
+        return 'Terminé';
       case 'offline':
-        return 'Offline';
+        return 'Hors ligne';
       default:
         return status.toUpperCase();
     }
@@ -2114,16 +2127,16 @@ export class AgentStreamComponent implements AfterViewInit {
   }
 
   public getArchitectureTooltip(model?: ModelInfo | null): string {
-    if (!model) return 'Agent Architecture: ARTEMIS Flash (Reactive Fast Loop)';
+    if (!model) return 'Architecture de l\'agent : ARTEMIS Flash (Boucle réactive rapide)';
     const name = this.getModelDisplayName(model.name);
     const isPro = name.toLowerCase().includes('pro');
     const archDesc = isPro
-      ? 'ARTEMIS Pro (Multi-Agent Cognitive State Graph)'
-      : 'ARTEMIS Flash (Reactive Fast Loop)';
+      ? 'ARTEMIS Pro (Graphe d\'état cognitif multi-agent)'
+      : 'ARTEMIS Flash (Boucle réactive rapide)';
     if (model.id) {
-      return `Agent Architecture: ${archDesc} · LLM: ${model.id} (${model.provider || 'google'})`;
+      return `Architecture : ${archDesc} · LLM : ${model.id} (${model.provider || 'google'})`;
     }
-    return `Agent Architecture: ${archDesc}`;
+    return `Architecture : ${archDesc}`;
   }
 
   public formatTokenCount(tokens?: number): string {
@@ -2133,9 +2146,9 @@ export class AgentStreamComponent implements AfterViewInit {
   public getTokenTooltip(phase: PhaseBlock): string {
     if (!phase.tokens) return '';
     if (phase.promptTokens && phase.completionTokens) {
-      return `Consumed: ${phase.tokens.toLocaleString()} tokens (${phase.promptTokens.toLocaleString()} in / ${phase.completionTokens.toLocaleString()} out)`;
+      return `Consommé : ${phase.tokens.toLocaleString()} tokens (${phase.promptTokens.toLocaleString()} entrée / ${phase.completionTokens.toLocaleString()} sortie)`;
     }
-    return `Consumed: ${phase.tokens.toLocaleString()} tokens`;
+    return `Consommé : ${phase.tokens.toLocaleString()} tokens`;
   }
 
   public isCurrentSessionActive(): boolean {

@@ -23,25 +23,25 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   standalone: true,
   imports: [RouterLink, RouterLinkActive],
   template: `
-    <nav class="floating-nav-switcher" aria-label="Main Navigation">
+    <nav class="floating-nav-switcher" aria-label="Navigation principale">
       <a 
         routerLink="/" 
         routerLinkActive="active" 
         [routerLinkActiveOptions]="{exact: true}"
         class="nav-tab-btn"
-        title="Return to Home Launcher to start a new task"
+        title="Retourner à l'accueil pour démarrer une nouvelle tâche"
       >
         <span class="material-symbols-outlined tab-icon">add_task</span>
-        <span class="tab-label">New / Home</span>
+        <span class="tab-label">Nouveau / Accueil</span>
       </a>
       <a 
         routerLink="/workspace" 
         routerLinkActive="active" 
         class="nav-tab-btn"
-        title="Open Workspace"
+        title="Ouvrir l'espace de travail"
       >
         <span class="material-symbols-outlined tab-icon">space_dashboard</span>
-        <span class="tab-label">Workspace</span>
+        <span class="tab-label">Espace de travail</span>
       </a>
     </nav>
   `,

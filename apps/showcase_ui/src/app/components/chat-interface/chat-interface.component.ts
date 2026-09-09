@@ -95,7 +95,7 @@ export class ChatInterfaceComponent {
       error: (err) => {
         console.error('Failed to submit task:', err);
         this.isSubmitting.set(false);
-        this.errorMessage.set(err.error?.detail || 'The runner is busy. Please wait for the current task to finish.');
+        this.errorMessage.set(err.error?.detail || 'L\'exécuteur est occupé. Veuillez attendre la fin de la tâche en cours.');
         // Auto-dismiss error banner after 5 seconds
         setTimeout(() => {
           this.errorMessage.set(null);
@@ -133,7 +133,7 @@ export class ChatInterfaceComponent {
    * Clear all database data/history to start fresh
    */
   public clearHistory(): void {
-    if (!confirm('Are you sure you want to clear all tasks and history? This cannot be undone.')) {
+    if (!confirm('Êtes-vous sûr de vouloir effacer toutes les tâches et l\'historique ? Cette action est irréversible.')) {
       return;
     }
     this.isSubmitting.set(true);
@@ -145,7 +145,7 @@ export class ChatInterfaceComponent {
       error: (err: any) => {
         console.error('Failed to clear history:', err);
         this.isSubmitting.set(false);
-        this.errorMessage.set(err.error?.detail || 'Failed to clear history.');
+        this.errorMessage.set(err.error?.detail || 'Échec de l\'effacement de l\'historique.');
       }
     });
   }
@@ -155,7 +155,7 @@ export class ChatInterfaceComponent {
    */
   public deleteTask(sessionId: string, event: MouseEvent): void {
     event.stopPropagation();
-    if (!confirm(`Are you sure you want to delete this task? This cannot be undone.`)) {
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.`)) {
       return;
     }
     this.isSubmitting.set(true);
@@ -167,7 +167,7 @@ export class ChatInterfaceComponent {
       error: (err: any) => {
         console.error(`Failed to delete task ${sessionId}:`, err);
         this.isSubmitting.set(false);
-        this.errorMessage.set(err.error?.detail || 'Failed to delete task.');
+        this.errorMessage.set(err.error?.detail || 'Échec de la suppression de la tâche.');
       }
     });
   }
@@ -189,6 +189,19 @@ export class ChatInterfaceComponent {
       return this.agentService.agentStatus() as 'running' | 'paused';
     }
     return 'completed';
+  }
+
+  public getTaskStatusLabel(session: Session): string {
+    const status = this.getTaskStatus(session);
+    switch (status) {
+      case 'running': return 'EN COURS';
+      case 'paused': return 'EN PAUSE';
+      case 'completed': return 'TERMINÉE';
+      case 'pending': return 'EN ATTENTE';
+      case 'failed': return 'ÉCHOUÉE';
+      case 'cancelled': return 'ANNULÉE';
+      default: return String(status).toUpperCase();
+    }
   }
 
   /**

@@ -828,7 +828,7 @@ export class AgentService {
                 this.activeVideoSegments.set([]);
                 this.recordingPlaybackStatus.set('failed');
                 this.recordingPlaybackMessage.set(
-                  parsedData?.error || 'Recording finalization failed.'
+                  parsedData?.error || 'Échec de la finalisation de l\'enregistrement.'
                 );
               }
             }
@@ -1818,7 +1818,7 @@ export class AgentService {
     this.videoWaitStartedAt = Date.now();
     this.isVideoLoading.set(true);
     this.recordingPlaybackStatus.set('processing');
-    this.recordingPlaybackMessage.set('Loading screen recording...');
+    this.recordingPlaybackMessage.set('Chargement de l\'enregistrement d\'écran...');
     if (targetUrl) {
       this.playerMode?.set('video');
     } else if (this.hasCurrentSessionStepFrames?.()) {
@@ -1870,7 +1870,7 @@ export class AgentService {
     this.shouldAutoplayVideo.set(true);
     this.isVideoLoading.set(true);
     this.recordingPlaybackStatus.set('processing');
-    this.recordingPlaybackMessage.set('Finalizing screen recording...');
+    this.recordingPlaybackMessage.set('Finalisation de l\'enregistrement d\'écran...');
     this.requestSessionVideo(sessionId, this.videoRequestGeneration);
   }
 
@@ -1901,7 +1901,7 @@ export class AgentService {
           this.activeVideoSegments.set([]);
           this.isVideoLoading.set(true);
           this.recordingPlaybackStatus.set('processing');
-          this.recordingPlaybackMessage.set('Finalizing screen recording...');
+          this.recordingPlaybackMessage.set('Finalisation de l\'enregistrement d\'écran...');
           this.scheduleVideoRetry(sessionId, generation, res.retry_after_ms);
           return;
         }
@@ -1913,8 +1913,8 @@ export class AgentService {
         this.recordingPlaybackStatus.set(status === 'failed' ? 'failed' : 'unavailable');
         this.recordingPlaybackMessage.set(
           res.message || (status === 'failed'
-            ? 'Recording finalization failed.'
-            : 'No screen recording is available for this task.')
+            ? 'Échec de la finalisation de l\'enregistrement.'
+            : 'Aucun enregistrement d\'écran disponible pour cette tâche.')
         );
         if (this.hasCurrentSessionStepFrames?.()) {
           this.playerMode?.set('steps');
@@ -1930,7 +1930,7 @@ export class AgentService {
         }
         this.isVideoLoading.set(false);
         this.recordingPlaybackStatus.set('failed');
-        this.recordingPlaybackMessage.set('Unable to load the screen recording.');
+        this.recordingPlaybackMessage.set('Impossible de charger l\'enregistrement d\'écran.');
         if (this.hasCurrentSessionStepFrames?.()) {
           this.playerMode?.set('steps');
         }
@@ -1943,7 +1943,7 @@ export class AgentService {
     if (Date.now() - this.videoWaitStartedAt > 120_000) {
       this.isVideoLoading.set(false);
       this.recordingPlaybackStatus.set('failed');
-      this.recordingPlaybackMessage.set('Recording finalization timed out. You can retry.');
+      this.recordingPlaybackMessage.set('Délai de finalisation de l\'enregistrement dépassé. Vous pouvez réessayer.');
       return;
     }
     const delay = Math.max(500, Math.min(3000, retryAfterMs));

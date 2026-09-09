@@ -27,7 +27,7 @@ limitations under the License.
         <div class="floating-dock-toast error">
           <span class="material-symbols-outlined toast-icon">error</span>
           <span class="toast-text">{{ errorMessage() }}</span>
-          <button type="button" class="btn-toast-close" (click)="errorMessage.set(null)" aria-label="Close error message">
+          <button type="button" class="btn-toast-close" (click)="errorMessage.set(null)" aria-label="Fermer le message d'erreur">
             <span class="material-symbols-outlined">close</span>
           </button>
         </div>
@@ -89,13 +89,13 @@ limitations under the License.
 
           <!-- Dormant / Capsule Peek View (Visible when mouse is away and input idle) -->
           <div class="capsule-peek-view">
-            <span class="capsule-placeholder">Start a new task...</span>
+            <span class="capsule-placeholder">Lancer une nouvelle tâche...</span>
           </div>
 
           <!-- Expanded Full View Content (Visible on hover, focus, or text) -->
           <div class="expanded-card-content">
             <div class="card-main-input-row">
-              <!-- Textarea Container with Dynamic English Placeholder -->
+              <!-- Textarea Container with Dynamic French Placeholder -->
               <div class="input-content-area">
                 <textarea #dockInput [(ngModel)]="taskInput"
                   (input)="onTextareaInput($event)"
@@ -105,8 +105,8 @@ limitations under the License.
                   rows="1"
                   [disabled]="isSubmitting()"
                   [placeholder]="selectedProfile() === 'pro' 
-                    ? 'Pro: plans first, checks results and recovers from blocked steps. For long or complex tasks'
-                    : 'Flash: fast single-look loop for everyday app tasks'"
+                    ? 'Pro : planifie d\'abord, vérifie les résultats et récupère des blocages. Pour tâches complexes'
+                    : 'Flash : boucle rapide monocoup pour les actions courantes'"
                   class="dock-textarea"
                   spellcheck="false"
                 ></textarea>
@@ -115,7 +115,7 @@ limitations under the License.
               <!-- Clear Button (visible when text is entered) -->
               @if (taskInput.trim() && !isSubmitting()) {
                 <button type="button" class="dock-circle-btn btn-clear"
-                  (click)="clearInput($event)" title="Clear input text" aria-label="Clear input text">
+                  (click)="clearInput($event)" title="Effacer le texte saisi" aria-label="Effacer le texte saisi">
                   <span class="material-symbols-outlined">close</span>
                 </button>
               }
@@ -136,8 +136,8 @@ limitations under the License.
                 [class.has-content]="!!taskInput.trim()"
                 [disabled]="!taskInput.trim() || isSubmitting()"
                 (click)="submitTask()"
-                [title]="isSubmitting() ? 'Starting task...' : 'Start task (Enter)'"
-                aria-label="Start task"
+                [title]="isSubmitting() ? 'Lancement en cours...' : 'Lancer la tâche (Entrée)'"
+                aria-label="Lancer la tâche"
                 >
                 @if (isSubmitting()) {
                   <span class="material-symbols-outlined spinning-icon">sync</span>
@@ -152,16 +152,16 @@ limitations under the License.
             <div class="card-footer-row">
               <div class="footer-left-group">
                 <!-- Segmented Architecture Toggle (Flash / Pro) -->
-                <div class="model-profile-toggle" role="group" aria-label="Select Agent Architecture">
+                <div class="model-profile-toggle" role="group" aria-label="Sélectionner l'architecture de l'agent">
                   <button type="button" class="profile-toggle-pill" [class.active]="selectedProfile() === 'flash'"
                     (mousedown)="$event.preventDefault()" (click)="setProfile('flash', $event)"
-                    title="Flash: fast single-look loop for everyday app tasks (3–5s/step)">
+                    title="Flash : boucle rapide monocoup pour les actions courantes (3–5s/étape)">
                     <span class="material-symbols-outlined pill-icon icon-flash">bolt</span>
                     <span class="pill-label">Flash</span>
                   </button>
                   <button type="button" class="profile-toggle-pill" [class.active]="selectedProfile() === 'pro'"
                     (mousedown)="$event.preventDefault()" (click)="setProfile('pro', $event)"
-                    title="Pro: plans first, checks results and recovers from blocked steps. For long or complex tasks (15–40s/step)">
+                    title="Pro : planifie d'abord, vérifie les résultats et résout les blocages. Pour les tâches complexes (15–40s/étape)">
                     <span class="material-symbols-outlined pill-icon icon-pro">psychology</span>
                     <span class="pill-label">Pro</span>
                   </button>

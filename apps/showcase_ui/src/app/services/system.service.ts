@@ -324,12 +324,12 @@ export class SystemService {
       status: 'starting',
       pid: null,
       serial: null,
-      stage_message: 'Spawning emulator process...',
+      stage_message: 'Démarrage du processus de l\'émulateur...',
       progress_percent: 15,
       started_at: Date.now() / 1000,
       elapsed_seconds: 0,
       error: null,
-      logs: [`Initiating launch for AVD: ${avdName}...`],
+      logs: [`Initialisation du lancement de l'AVD : ${avdName}...`],
       can_retry: true,
     });
 
@@ -346,13 +346,13 @@ export class SystemService {
         error: (err) => {
           console.error('Failed to launch emulator:', err);
           this.launchingAvd.set(null);
-          const errorMsg = err?.error?.detail || err?.message || 'Failed to start emulator process.';
+          const errorMsg = err?.error?.detail || err?.message || 'Échec du démarrage du processus de l\'émulateur.';
           this.emulatorLaunchState.set({
             avd_name: avdName,
             status: 'failed',
             pid: null,
             serial: null,
-            stage_message: 'Failed to initiate launch.',
+            stage_message: 'Échec de l\'initialisation du lancement.',
             progress_percent: 0,
             started_at: null,
             elapsed_seconds: 0,

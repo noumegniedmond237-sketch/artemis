@@ -172,53 +172,53 @@ export function getActionTitle(action: any): string {
     case 'click':
     case 'tap_element':
     case 'click_element':
-      return 'Tapping Element';
+      return 'Appui sur l\'élément';
     case 'input':
     case 'input_text':
     case 'focus_and_input_text':
-      return 'Entering Text';
+      return 'Saisie de texte';
     case 'focus_and_clear_text':
     case 'clear_text':
-      return 'Clearing Text';
+      return 'Effacement du texte';
     case 'swipe':
     case 'scroll': {
       const actObj = getActionObject(action);
       const args = actObj?.args && typeof actObj.args === 'object' ? actObj.args : {};
       const dir = actObj?.direction || actObj?.gesture || args.direction || args.gesture || (typeof args.action === 'string' ? args.action : '') || (typeof actObj?.action === 'string' && actObj.action !== name ? actObj.action : '');
       if (dir && isPureDirectionString(dir)) {
-        return `Swiping Screen (${String(dir).toUpperCase()})`;
+        return `Balayage de l'écran (${String(dir).toUpperCase()})`;
       }
-      return 'Swiping Screen';
+      return 'Balayage de l\'écran';
     }
     case 'drag':
     case 'drag_and_drop':
-      return 'Dragging Screen';
+      return 'Glissement sur l\'écran';
     case 'press_key':
     case 'press_home':
     case 'press_back':
-      return 'Pressing Hardware Key';
+      return 'Appui sur touche matérielle';
     case 'launch_app':
     case 'open_app':
-      return 'Launching Application';
+      return 'Lancement de l\'application';
     case 'stop_app':
     case 'close_app':
-      return 'Stopping Application';
+      return 'Arrêt de l\'application';
     case 'manage_app': {
       const actObj = getActionObject(action);
       const actStr = (actObj?.action || actObj?.args?.action || '').toLowerCase();
-      if (actStr === 'launch') return 'Launching Application';
-      if (actStr === 'stop' || actStr === 'close') return 'Stopping Application';
-      return 'Managing Application';
+      if (actStr === 'launch') return 'Lancement de l\'application';
+      if (actStr === 'stop' || actStr === 'close') return 'Arrêt de l\'application';
+      return 'Gestion de l\'application';
     }
     case 'wait_for_delay':
     case 'delay':
     case 'wait':
-      return 'Waiting for Delay';
+      return 'Attente';
     case 'long_press':
     case 'long_press_on':
-      return 'Long Pressing Element';
+      return 'Appui long sur l\'élément';
     case 'click_sequence':
-      return 'Clicking Sequence';
+      return 'Séquence de clics';
     default:
       return name.replace(/_/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
   }
@@ -264,10 +264,10 @@ export function getActionTargetText(action: any): string {
  */
 export function getActionInputLabel(action: any): string {
   const act = getActionObject(action);
-  if (!act) return 'Input';
+  if (!act) return 'Entrée';
   const name = (act.name || act.action || '').toLowerCase();
   if (name.includes('delay') || name.includes('wait')) {
-    return 'Duration';
+    return 'Durée';
   }
   if (name === 'swipe' || name === 'scroll' || name === 'drag' || name === 'drag_and_drop') {
     const actObj = getActionObject(action);
@@ -276,15 +276,15 @@ export function getActionInputLabel(action: any): string {
     if (dir && isPureDirectionString(dir)) {
       return 'Direction';
     }
-    return 'Input';
+    return 'Entrée';
   }
   if (name === 'press_key' || name.includes('key')) {
-    return 'Key';
+    return 'Touche';
   }
   if (name === 'input_text' || name.includes('input')) {
-    return 'Input Text';
+    return 'Texte saisi';
   }
-  return 'Input';
+  return 'Entrée';
 }
 
 /**
@@ -450,7 +450,7 @@ export function getActionErrorMessage(action: any, stepData?: any): string {
       }
     }
   }
-  return 'Action Failed';
+  return 'Échec de l\'action';
 }
 
 /**
@@ -531,7 +531,7 @@ export function extractActionExtraParams(action: any, cache?: WeakMap<any, Actio
   // Explicitly check duration if available and not already formatted
   const dur = mergedObj.duration || mergedObj.duration_ms;
   if (dur !== undefined && dur !== null && dur !== '') {
-    result.push({ key: 'Duration', value: typeof dur === 'number' ? `${dur}ms` : String(dur) });
+    result.push({ key: 'Durée', value: typeof dur === 'number' ? `${dur}ms` : String(dur) });
   }
 
   for (const [k, v] of Object.entries(mergedObj)) {
@@ -547,7 +547,7 @@ export function extractActionExtraParams(action: any, cache?: WeakMap<any, Actio
     }
 
     let prettyKey = k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    if (lowerK === 'time_in_ms' || lowerK === 'delay_ms') prettyKey = 'Delay';
+    if (lowerK === 'time_in_ms' || lowerK === 'delay_ms') prettyKey = 'Délai';
 
     result.push({ key: prettyKey, value: valStr });
   }
@@ -981,7 +981,7 @@ export function extractStepReplayFrames(logsOrSteps: any[]): StepReplayFrame[] {
   for (let i = 0; i < visualCandidates.length; i++) {
     const { stepData, act, preUrl, postUrl, primaryImg } = visualCandidates[i];
     const stepNum = i + 1; // 1-indexed sequential frame number (1, 2, 3...)
-    const title = act ? (getActionTitle(act) || 'Action') : `Step ${stepNum}`;
+    const title = act ? (getActionTitle(act) || 'Action') : `Étape ${stepNum}`;
     const coords = act ? getActionCoords(act) : '';
     const targetText = act ? getActionTargetText(act) : '';
     const actionDesc = coords ? `${title} (${coords})` : (targetText ? `${title} (${targetText})` : title);
@@ -995,7 +995,7 @@ export function extractStepReplayFrames(logsOrSteps: any[]): StepReplayFrame[] {
       stepNumber: stepNum,
       rawStepNumber: rawStepNum,
       stepId: String(stepData.step_id || `step-${stepNum}`),
-      title: `Step ${stepNum}: ${title}`,
+      title: `Étape ${stepNum} : ${title}`,
       actionText: actionDesc,
       action: act,
       actionType: act?.action || act?.name || 'action',
