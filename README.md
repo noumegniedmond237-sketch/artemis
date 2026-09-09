@@ -1,4 +1,4 @@
-﻿<p align="center">
+<p align="center">
   <img src="./docs/assets/artemis-banner.png?v=7" alt="Bannière ARTEMIS" width="100%" />
 </p>
 
@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="./README.md"><b>Français</b></a> •
-  <a href="./README_EN.md">English</a> •
+  <a href="https://github.com/google/artemis#readme">English (Google)</a> •
   <a href="./README_CN.md">中文文档</a> •
   <a href="#antigravity--artemis--flux-de-test-autonome">Démonstration</a> •
   <a href="#démarrage-rapide">Démarrage Rapide</a> •
