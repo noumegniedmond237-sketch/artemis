@@ -7,7 +7,8 @@
 </p>
 
 <p align="center">
-  <a href="./README.md">English</a> •
+  <a href="./README.md">Français</a> •
+  <a href="./README_EN.md">English</a> •
   <a href="./README_CN.md"><b>中文文档</b></a> •
   <a href="#workflow-showcase">全流程演示</a> •
   <a href="#quick-start">快速上手</a> •
